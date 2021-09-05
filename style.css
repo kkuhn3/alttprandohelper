@@ -28,15 +28,15 @@ body {
 #tracker .chest { width: 64px; height: 64px; }
 
 #tracker .tunic { width: 128px; height: 128px; }
-#tracker .counter { 
-	position: absolute; 
-	top: 0; 
-	left: 0; 
-	color: white; 
-	width: 48px; 
-	height: 48px;
-	font-size: 30px;
-    cursor: default;
+#tracker .counter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white;
+  width: 48px;
+  height: 48px;
+  font-size: 30px;
+  cursor: default;
 }
 #tracker .sword { position: absolute; top: 0; right: 0; }
 #tracker .shield { position: absolute; bottom: 0; left: 0; }

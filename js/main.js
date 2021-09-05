@@ -62,18 +62,18 @@
             onClick: function() { props.onClick(name); }
         });
     };
-	
-	var Counter = function(props) {
-		var name = props.name,
-			encounter = props.value;
-		return div(
-			'.counter', 
-			{
-				onClick: function() {props.onClick(name); }
-			}, 
-			encounter.chests
-		);
-	};
+    
+    var Counter = function(props) {
+        var name = props.name,
+            encounter = props.value;
+        return div(
+            '.counter', 
+            {
+                onClick: function() {props.onClick(name); }
+            }, 
+            encounter.chests
+        );
+    };
 
     var Tracker = createReactClass({
         render: function() {
@@ -81,7 +81,7 @@
                 grid([
                     grid([[
                         this.tunic(),
-						this.counter('tower'),
+                        this.counter('tower'),
                         this.item('sword'),
                         this.item('shield'),
                         this.item('moonpearl'),
@@ -173,10 +173,10 @@
         chest: function(name) {
             return t(Chest, { name: name, value: this.props.dungeons[name], onClick: this.props.chest_click });
         },
-		
-		counter: function(name) {
-			return t(Counter, { name: name, value: this.props.encounters[name], onClick: this.props.tower_chest_click });
-		}
+        
+        counter: function(name) {
+            return t(Counter, { name: name, value: this.props.encounters[name], onClick: this.props.tower_chest_click });
+        }
     });
 
     function WithHighlight(Wrapped, source) {
@@ -366,7 +366,7 @@
                     prize_click: this.prize_click,
                     medallion_click: this.medallion_click,
                     chest_click: this.chest_click,
-					tower_chest_click: this.tower_chest_click,
+                    tower_chest_click: this.tower_chest_click,
                     horizontal: query.hmap
                 }, this.state)),
                 (query.hmap || query.vmap) && t(Map, Object.assign({ chest_click: this.map_chest_click, horizontal: query.hmap }, this.state)));
@@ -403,12 +403,12 @@
         map_chest_click: function(name) {
             this.setState(update(this.state, { chests: at(name, { $toggle: ['marked'] }) }));
         },
-		
-		tower_chest_click: function(name) {
-			var encounter = this.state.encounters[name],
+        
+        tower_chest_click: function(name) {
+            var encounter = this.state.encounters[name],
                 value = counter(encounter.chests, -1, encounter.chest_limit);
-			this.setState(update(this.state, { encounters: at(name, { chests: { $set: value } }) }));
-		}
+            this.setState(update(this.state, { encounters: at(name, { chests: { $set: value } }) }));
+        }
     });
 
     window.start = function() {
