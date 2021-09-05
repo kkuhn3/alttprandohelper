@@ -187,10 +187,27 @@
     var encounters = {
         agahnim: {
             caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
-            is_completable: function(items) {
+			darkworld: false,
+            is_completable: function(items, model) {
                 return items.sword >= 2 || items.cape && items.sword ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
+            }
+        },
+		tower: {
+            caption: 'Ganon\s Tower (20)',
+            darkworld: true,
+			chests: 20,
+            chest_limit: 20,
+            is_completable: function(items, model) {
+				if (!items.moonpearl || !items.hammer || items.glove !== 2) return 'unavailable';
+                if (!items.hookshot && !items.mirror) return 'unavailable';
+				
+                var crystal_count = Object.keys(model.dungeons).reduce(function(s, name) {
+                    var dungeon = model.dungeons[name];
+                    return (dungeon.prize === 3 || dungeon.prize === 4) && dungeon.completed ? s + 1 : s;
+                }, 0);
+				return crystal_count >= 7 ? 'available' : 'unavailable';
             }
         }
     };
@@ -636,18 +653,11 @@
     };
 
     var standard_chests = update(chests, {
-        link_house: { $merge: { marked: true } },
-        secret: { $merge: { marked: true } },
-        castle: { $merge: { marked: true } },
-        escape_dark: { $merge: {
-            marked: true,
-            is_available: always
-        } },
+        escape_dark: { $merge: {is_available: always} },
         escape_side: { $merge: {
             caption: 'Escape Sewer Side Room (3) {bomb}/{boots}',
             is_available: always
-        } },
-        sanctuary: { $merge: { marked: true } }
+        } }
     });
 
     function medallion_caption(caption, name) {

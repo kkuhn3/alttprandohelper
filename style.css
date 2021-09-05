@@ -28,6 +28,16 @@ body {
 #tracker .chest { width: 64px; height: 64px; }
 
 #tracker .tunic { width: 128px; height: 128px; }
+#tracker .counter { 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	color: white; 
+	width: 48px; 
+	height: 48px;
+	font-size: 30px;
+    cursor: default;
+}
 #tracker .sword { position: absolute; top: 0; right: 0; }
 #tracker .shield { position: absolute; bottom: 0; left: 0; }
 #tracker .moonpearl {
@@ -189,6 +199,8 @@ body {
 .agahnim { background-image:url(images/dungeons/agahnim0.png); }
 .agahnim.active { background-image:url(images/dungeons/agahnim1.png); }
 #map .boss.agahnim { background-color: transparent; }
+.tower { background-image:url(images/dungeons/agahnim0.png); }
+#map .boss.tower { background-color: transparent; }
 .boss.eastern { background-image: url(images/dungeons/boss0.png); }
 .boss.desert { background-image: url(images/dungeons/boss1.png); }
 .boss.hera { background-image: url(images/dungeons/boss2.png); }
@@ -235,6 +247,7 @@ body {
 #map .turtle   { left: 93.8%; top: 7.0%; }
 
 #map .agahnim { left: 50.0%; top: 52.6%; }
+#map .tower { left: 62.0%; top: 4.5%; }
 
 #map .altar          { left: 5.0%;  top: 3.2%; }
 #map .mushroom       { left: 12.4%; top: 8.6%; }
