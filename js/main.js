@@ -372,42 +372,49 @@
                 (query.hmap || query.vmap) && t(Map, Object.assign({ chest_click: this.map_chest_click, horizontal: query.hmap }, this.state)));
         },
 
-        item_click: function(name) {
+        item_click: async function(name) {
             var items = this.state.items,
                 change = typeof items[name] === 'boolean' ?
                     { $toggle: [name] } :
                     at(name, { $set: items.inc(name) });
-            this.setState(update(this.state, { items: change }));
+            await this.setState(update(this.state, { items: change }));
+            await window.save("1", this.state);
         },
 
-        boss_click: function(name) {
-            this.setState(update(this.state, { dungeons: at(name, { $toggle: ['completed'] }) }));
+        boss_click: async function(name) {
+            await this.setState(update(this.state, { dungeons: at(name, { $toggle: ['completed'] }) }));
+            await window.save("1", this.state);
         },
 
-        prize_click: function(name) {
+        prize_click: async function(name) {
             var value = counter(this.state.dungeons[name].prize, 1, 4);
-            this.setState(update(this.state, { dungeons: at(name, { prize: { $set: value } }) }));
+            await this.setState(update(this.state, { dungeons: at(name, { prize: { $set: value } }) }));
+            await window.save("1", this.state);
         },
 
-        medallion_click: function(name) {
+        medallion_click: async function(name) {
             var value = counter(this.state.dungeons[name].medallion, 1, 3);
-            this.setState(update(this.state, { dungeons: at(name, { medallion: { $set: value } }) }));
+            await this.setState(update(this.state, { dungeons: at(name, { medallion: { $set: value } }) }));
+            await window.save("1", this.state);
         },
 
-        chest_click: function(name) {
+        chest_click: async function(name) {
             var dungeon = this.state.dungeons[name],
                 value = counter(dungeon.chests, -1, dungeon.chest_limit);
-            this.setState(update(this.state, { dungeons: at(name, { chests: { $set: value } }) }));
+            await this.setState(update(this.state, { dungeons: at(name, { chests: { $set: value } }) }));
+            await window.save("1", this.state);
         },
 
-        map_chest_click: function(name) {
-            this.setState(update(this.state, { chests: at(name, { $toggle: ['marked'] }) }));
+        map_chest_click: async function(name) {
+            await this.setState(update(this.state, { chests: at(name, { $toggle: ['marked'] }) }));
+            await window.save("1", this.state);
         },
         
-        tower_chest_click: function(name) {
+        tower_chest_click: async function(name) {
             var encounter = this.state.encounters[name],
                 value = counter(encounter.chests, -1, encounter.chest_limit);
-            this.setState(update(this.state, { encounters: at(name, { chests: { $set: value } }) }));
+            await this.setState(update(this.state, { encounters: at(name, { chests: { $set: value } }) }));
+            await window.save("1", this.state);
         }
     });
 

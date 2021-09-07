@@ -36,11 +36,11 @@
         if (!valid_css_color(params.bg)) return;
 
         open('tracker.html?' + query(params),
-            '',
+            '_self',
             'width={width},height={height},titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0'
                 .replace('{width}', size.w)
                 .replace('{height}', size.h));
-        setTimeout('window.close()', 5000);
+        //setTimeout('window.close()', 5000);
     }
 
     function query(params) {
