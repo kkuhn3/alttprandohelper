@@ -5,5 +5,5 @@ $id = str_replace("\\", "", $id, $count);
 $id = str_replace(".", "", $id, $count);
 $id = str_replace("/", "", $id, $count);
 $state = $input["state"];
-file_put_contents(($id).".json",($state));
+file_put_contents("./saves/".($id).".json",($state));
 ?>

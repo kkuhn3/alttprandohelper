@@ -1,6 +1,9 @@
 (function(window) {
 
     window.save = async function(iid, data) {
+        if(typeof iid === "undefined") {
+            iid = "";
+        }
         let saveData = JSON.stringify({id: iid, state: JSON.stringify(data, undefined, 4)}, undefined, 4);
         await fetch('./save/save.php', {
             method: 'POST',
@@ -8,8 +11,11 @@
         });
     }
 
-    window.get = async function(id) {
-        let saveData = JSON.stringify({id: id});
+    window.get = async function(iid) {
+        if(typeof iid === "undefined") {
+            iid = "";
+        }
+        let saveData = JSON.stringify({id: iid});
         const response = await fetch('./save/get.php', {
             method: 'POST',
             body: saveData
@@ -21,5 +27,14 @@
             return {};
         }
     }
+    
+    window.send = function(iid, func, name) {
+        window.socket.send('{"id":"'+iid+'","func":"'+func+'","name":"'+name+'"}');
+        window.start = Date.now();
+        window.socket.send('ping');
+    }
+    
+    // Create WebSocket connection.
+    window.socket = new WebSocket('ws://kpow2.com:7979/alttprandohelper');
 
 }(window));

@@ -373,7 +373,8 @@
         },
 
         componentDidMount: async function(){
-            let loadState = await window.get(this.props.query.id);
+            window.id = this.props.query.id;
+            let loadState = await window.get(window.id);
             for(const [statekey, statevalue] of Object.entries(loadState)) {
                 if(statekey === "chests") {
                     for(const [key, value] of Object.entries(loadState["chests"])) {
@@ -400,51 +401,96 @@
                     }
                 }
             }
+            
+            // Connection opened
+            window.socket.addEventListener('open', function (event) {});
+            
+            // Listen for messages
+            window.socket.addEventListener('message', function (event) {
+                console.log(event.data);
+                if(event.data === "pong") {
+                    let end = Date.now();
+                    let delta = end - window.start;
+                    let loPings = [];
+                    if(localStorage.getItem('kpow2Pings') != null){
+                        loPings = JSON.parse(localStorage.getItem('kpow2Pings'));
+                    }
+                    loPings.push(delta);
+                    localStorage.setItem("kpow2Pings", JSON.stringify(loPings));
+                }
+                else {
+                    let msgObj = JSON.parse(event.data);
+                    if(msgObj.id === window.id || (msgObj.id === typeof window.id)) {
+                        this[msgObj.func](msgObj.name, true);
+                    }
+                }
+            }.bind(this))
         },
 
-        item_click: async function(name) {
+        item_click: async function(name, isRepeat) {
             var items = this.state.items,
                 change = typeof items[name] === 'boolean' ?
                     { $toggle: [name] } :
                     at(name, { $set: items.inc(name) });
             await this.setState(update(this.state, { items: change }));
-            await window.save(this.props.query.id, this.state);
+            if(!isRepeat) {
+                await window.save(this.props.query.id, this.state);
+                window.send(this.props.query.id, "item_click", name);
+            }
         },
 
-        boss_click: async function(name) {
+        boss_click: async function(name, isRepeat) {
             await this.setState(update(this.state, { dungeons: at(name, { $toggle: ['completed'] }) }));
-            await window.save(this.props.query.id, this.state);
+            if(!isRepeat) {
+                await window.save(this.props.query.id, this.state);
+                window.send(this.props.query.id, "boss_click", name);
+            }
         },
 
-        prize_click: async function(name) {
+        prize_click: async function(name, isRepeat) {
             var value = counter(this.state.dungeons[name].prize, 1, 4);
             await this.setState(update(this.state, { dungeons: at(name, { prize: { $set: value } }) }));
-            await window.save(this.props.query.id, this.state);
+            if(!isRepeat) {
+                await window.save(this.props.query.id, this.state);
+                window.send(this.props.query.id, "prize_click", name);
+            }
         },
 
-        medallion_click: async function(name) {
+        medallion_click: async function(name, isRepeat) {
             var value = counter(this.state.dungeons[name].medallion, 1, 3);
             await this.setState(update(this.state, { dungeons: at(name, { medallion: { $set: value } }) }));
-            await window.save(this.props.query.id, this.state);
+            if(!isRepeat) {
+                await window.save(this.props.query.id, this.state);
+                window.send(this.props.query.id, "medallion_click", name);
+            }
         },
 
-        chest_click: async function(name) {
+        chest_click: async function(name, isRepeat) {
             var dungeon = this.state.dungeons[name],
                 value = counter(dungeon.chests, -1, dungeon.chest_limit);
             await this.setState(update(this.state, { dungeons: at(name, { chests: { $set: value } }) }));
-            await window.save(this.props.query.id, this.state);
+            if(!isRepeat) {
+                await window.save(this.props.query.id, this.state);
+                window.send(this.props.query.id, "chest_click", name);
+            }
         },
 
-        map_chest_click: async function(name) {
+        map_chest_click: async function(name, isRepeat) {
             await this.setState(update(this.state, { chests: at(name, { $toggle: ['marked'] }) }));
-            await window.save(this.props.query.id, this.state);
+            if(!isRepeat) {
+                await window.save(this.props.query.id, this.state);
+                window.send(this.props.query.id, "map_chest_click", name);
+            }
         },
         
-        tower_chest_click: async function(name) {
+        tower_chest_click: async function(name, isRepeat) {
             var encounter = this.state.encounters[name],
                 value = counter(encounter.chests, -1, encounter.chest_limit);
             await this.setState(update(this.state, { encounters: at(name, { chests: { $set: value } }) }));
-            await window.save(this.props.query.id, this.state);
+            if(!isRepeat) {
+                await window.save(this.props.query.id, this.state);
+                window.send(this.props.query.id, "tower_chest_click", name);
+            }
         }
     });
 

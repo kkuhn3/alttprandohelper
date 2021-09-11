@@ -4,5 +4,5 @@ $id = $input["id"];
 $id = str_replace("\\", "", $id, $count);
 $id = str_replace(".", "", $id, $count);
 $id = str_replace("/", "", $id, $count);
-echo file_get_contents(($id).".json");
+echo file_get_contents("./saves/".($id).".json");
 ?>
