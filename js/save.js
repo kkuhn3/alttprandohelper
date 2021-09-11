@@ -14,7 +14,12 @@
             method: 'POST',
             body: saveData
         });
-        return response.json();
+        try {
+            return await response.json();
+        }
+        catch (error) {
+            return {};
+        }
     }
 
 }(window));

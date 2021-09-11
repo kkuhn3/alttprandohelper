@@ -18,7 +18,8 @@
                 sprite: document.getElementById('sprite').value,
                 scale: document.getElementById('scale').value,
                 bg: document.getElementById('background-color').value ||
-                    document.getElementById('custom-color').value
+                    document.getElementById('custom-color').value,
+                id: document.getElementById('save-id').value
             },
             size = function(scale, size) {
                 return {
@@ -40,7 +41,6 @@
             'width={width},height={height},titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0'
                 .replace('{width}', size.w)
                 .replace('{height}', size.h));
-        //setTimeout('window.close()', 5000);
     }
 
     function query(params) {
@@ -50,7 +50,8 @@
             params.vmap && 'vmap',
             params.sprite && 'sprite='+params.sprite,
             params.scale && 'scale='+params.scale,
-            !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg)
+            !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg),
+            params.id && 'id='+params.id
         ]).join('&');
     }
 

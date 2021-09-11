@@ -102,4 +102,5 @@
         return e1.style.color.replace(/ /g, '') !== 'rgb(0,0,0)' ||
             e2.style.color.replace(/ /g, '') !== 'rgb(255,255,255)';
     };
+
 }(window));
