@@ -685,6 +685,10 @@
         });
     }
 
+    let standard_dungeons = prologue_dungeons(dungeons);
+    let standard_encounters = prologue_encounters(encounters);
+    standard_chests = prologue_chests(standard_chests);
+
     chests = finalize_chests(chests);
     standard_chests = finalize_chests(standard_chests);
 
@@ -694,10 +698,80 @@
         });
     }
 
+    function prologue_dungeons(dungeons) {
+        let result = {}
+        for (const [key, value] of Object.entries(dungeons)) {
+            result[key] = {};
+            Object.assign(result[key], { 
+                completed: value.completed, 
+                prize: value.prize, 
+                medallion: value.medallion, 
+                caption: value.caption,
+                chest_limit: value.chest_limit,
+                chests: value.chests,
+                darkworld: value.darkworld
+            });
+            Object.assign(result[key], { is_completable: function(items, model) {
+                if(!model.chests.sanctuary.marked) {
+                    return 'unavailable';
+                }
+                return value.is_completable(items, model);
+            }});
+            Object.assign(result[key], { is_progressable: function(items, model) {
+                if(!model.chests.sanctuary.marked) {
+                    return 'unavailable';
+                }
+                return value.is_progressable(items, model);
+            }});
+        }
+        return result;
+    }
+
+    function prologue_encounters(encounters) {
+        let result = {};
+        for (const [key, value] of Object.entries(encounters)) {
+            result[key] = {};
+            Object.assign(result[key], { 
+                caption: value.caption, 
+                darkworld: value.darkworld, 
+                chests: value.chests, 
+                chest_limit: value.chest_limit
+            });
+            Object.assign(result[key], { is_completable: function(items, model) {
+                if(!model.chests.sanctuary.marked) {
+                    return 'unavailable';
+                }
+                return value.is_completable(items, model);
+            }});
+        }
+        return result;
+    }
+
+    function prologue_chests(chests) {
+        let result = {};
+        let prologueable = ['link_house', 'secret', 'castle', 'escape_dark', 'escape_side', 'sanctuary'];
+        for (const [key, value] of Object.entries(chests)) {
+            result[key] = {};
+            Object.assign(result[key], { 
+                caption: value.caption, 
+                darkworld: value.darkworld
+            });
+            Object.assign(result[key], { is_available: function(items, model) {
+                if(!prologueable.includes(key)) {
+                    if(!model.chests.sanctuary.marked) {
+                        return 'unavailable';
+                    }
+                }
+                return value.is_available(items, model);
+            }});
+        }
+        return result;
+    }
+
     window.location_model = function(mode) {
         return {
-            dungeons: dungeons,
-            encounters: encounters,
+            dungeons: { standard: standard_dungeons, open: dungeons }[mode],
+            encounters: { standard: standard_encounters, open: encounters }[mode],
             chests: { standard: standard_chests, open: chests }[mode]
         };
     };
