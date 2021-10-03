@@ -420,7 +420,17 @@
                 }
                 else {
                     let msgObj = JSON.parse(event.data);
-                    if(msgObj.id === window.id || (msgObj.id === typeof window.id)) {
+                    if(Array.isArray(msgObj) && window.id === "auto") {
+                        for(const [k, msg] of Object.entries(msgObj)) {
+                            for(const [kk, memId] of Object.entries(msg.locations)) {
+                                let check = window.getCheckFromMemId(memId);
+                                if(check.isComplete) {
+                                    this[check.func](check.name, true);
+                                }
+                            }
+                        }
+                    }
+                    else if(msgObj.id === window.id || msgObj.id === typeof window.id) {
                         this[msgObj.func](msgObj.name, true);
                     }
                 }

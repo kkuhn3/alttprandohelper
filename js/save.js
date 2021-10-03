@@ -35,6 +35,6 @@
     }
     
     // Create WebSocket connection.
-    window.socket = new WebSocket('ws://kpow2.com:7979/alttprandohelper');
+    window.socket = new WebSocket('ws://127.0.0.1:7979/alttprandohelper');
 
 }(window));

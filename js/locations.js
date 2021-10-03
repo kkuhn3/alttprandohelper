@@ -16,7 +16,8 @@
                 return this.chests <= 2 && !items.lantern ||
                     this.chests === 1 && !items.has_bow() ?
                     'possible' : 'available';
-            }
+            },
+            checks: [1573200, 59827, 59893, 59767, 59833, 59773]
         },
         desert: {
             caption: 'Desert Palace',
@@ -31,7 +32,8 @@
                 if (!items.book && !(items.flute && items.glove === 2 && items.mirror)) return 'unavailable';
                 if (items.glove && (items.firerod || items.lantern) && items.boots) return 'available';
                 return this.chests > 1 && items.boots ? 'available' : 'possible';
-            }
+            },
+            checks: [1573216, 59842, 59851, 59791, 1573201, 59830]
         },
         hera: {
             caption: 'Tower of Hera',
@@ -46,7 +48,8 @@
                 return items.firerod || items.lantern ?
                     items.flute || items.lantern ? 'available' : 'dark' :
                     'possible';
-            }
+            },
+            checks: [1573218, 59878, 59821, 1573202, 59896, 59899]
         },
         darkness: {
             caption: 'Palace of Darkness {lantern}',
@@ -63,7 +66,8 @@
                 return !(items.has_bow() && items.lantern) ||
                     this.chests === 1 && !items.hammer ?
                     'possible' : 'available';
-            }
+            },
+            checks: [59968, 59971, 59974, 59977, 59980, 59983, 59986, 1573203, 59989, 59959, 59992, 59962, 59995, 59965]
         },
         swamp: {
             caption: 'Swamp Palace {mirror}',
@@ -83,7 +87,8 @@
                 if (this.chests <= 4) return !items.hammer ? 'unavailable' : !items.hookshot ? 'possible' : 'available';
                 if (this.chests <= 5) return !items.hammer ? 'unavailable' : 'available';
                 return !items.hammer ? 'possible' : 'available';
-            }
+            },
+            checks: [60064, 60067, 60070, 59782, 59785, 60073, 60076, 60079, 1573204, 60061]
         },
         skull: {
             caption: 'Skull Woods',
@@ -95,7 +100,8 @@
             is_progressable: function(items) {
                 if (!items.can_reach_outcast()) return 'unavailable';
                 return items.firerod ? 'available' : 'possible';
-            }
+            },
+            checks: [59809, 59902, 59848, 59794, 1573205, 59800, 59803, 59806]
         },
         thieves: {
             caption: 'Thieves\' Town',
@@ -109,7 +115,8 @@
             is_progressable: function(items) {
                 if (!items.can_reach_outcast()) return 'unavailable';
                 return this.chests === 1 && !items.hammer ? 'possible' : 'available';
-            }
+            },
+            checks: [59905, 59908, 59911, 59914, 59917, 59920, 59923, 1573206]
         },
         ice: {
             caption: 'Ice Palace (yellow=must bomb jump)',
@@ -124,7 +131,8 @@
                 if (!items.moonpearl || !items.flippers || items.glove !== 2) return 'unavailable';
                 if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
                 return items.hammer ? 'available' : 'possible';
-            }
+            },
+            checks: [59872, 59875, 59812, 59818, 59860, 59797, 1573207, 59869]
         },
         mire: {
             caption: medallion_caption('Misery Mire {medallion}{lantern}', 'mire'),
@@ -151,7 +159,8 @@
                     items.lantern || items.firerod :
                     items.lantern && items.somaria) ?
                     'available' : 'possible';
-            }
+            },
+            checks: [60001, 60004, 60007, 60010, 60013, 1573208, 59866, 59998]
         },
         turtle: {
             caption: medallion_caption('Turtle Rock {medallion}{lantern}', 'turtle'),
@@ -180,7 +189,8 @@
                 if (this.chests <= 2) return !laser_safety ? 'unavailable' : items.firerod ? dark_room : 'possible';
                 if (this.chests <= 4) return laser_safety && items.firerod && items.lantern ? 'available' : 'possible';
                 return items.firerod && items.lantern ? 'available' : 'possible';
-            }
+            },
+            checks: [59938, 59941, 59944, 1573209, 59947, 59950, 59953, 59956, 59926, 59929, 59932, 59935]
         }
     };
 
@@ -192,7 +202,8 @@
                 return items.sword >= 2 || items.cape && items.sword ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
-            }
+            },
+            checks: []
         },
         tower: {
             caption: 'Ganon\s Tower (20)',
@@ -208,7 +219,9 @@
                     return (dungeon.prize === 3 || dungeon.prize === 4) && dungeon.completed ? s + 1 : s;
                 }, 0);
                 return crystal_count >= 7 ? 'available' : 'unavailable';
-            }
+            },
+            checks: [60160, 60163, 60166, 60088, 60091, 60094, 60097, 60100, 60103, 60106, 60109, 60112, 60115, 60118,
+                     60121, 60124, 60127, 1573217, 60130, 60133, 60136, 60139, 60142, 60145, 60148, 60151, 60157]
         }
     };
 
@@ -223,21 +236,25 @@
 
                 return pendant_count >= 3 ? 'available' :
                     items.book ? 'possible' : 'unavailable';
-            }
+            },
+            checks: [166320]
         },
         mushroom: {
             caption: 'Mushroom',
-            is_available: always
+            is_available: always,
+            checks: [1572883]
         },
         hideout: {
             caption: 'Forest Hideout',
-            is_available: always
+            is_available: always,
+            checks: [1572864]
         },
         tree: {
             caption: 'Lumberjack Tree {agahnim}{boots}',
             is_available: function(items) {
                 return items.agahnim && items.boots ? 'available' : 'possible';
-            }
+            },
+            checks: [1572865]
         },
         lost_man: {
             caption: 'Lost Old Man {lantern}',
@@ -245,7 +262,8 @@
                 return items.glove || items.flute ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
-            }
+            },
+            checks: [1010170]
         },
         spectacle_cave: {
             caption: 'Spectacle Rock Cave',
@@ -253,7 +271,8 @@
                 return items.glove || items.flute ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
-            }
+            },
+            checks: [1572866]
         },
         spectacle_rock: {
             caption: 'Spectacle Rock {mirror}',
@@ -263,7 +282,8 @@
                         items.lantern || items.flute ? 'available' : 'dark' :
                         'possible' :
                     'unavailable';
-            }
+            },
+            checks: [1573184]
         },
         ether: {
             caption: 'Ether Tablet {sword2}{book}',
@@ -273,7 +293,8 @@
                         items.lantern || items.flute ? 'available' : 'dark' :
                         'possible' :
                     'unavailable';
-            }
+            },
+            checks: [1572886]
         },
         paradox: {
             caption: 'Death Mountain East (5 + 2 {bomb})',
@@ -281,7 +302,8 @@
                 return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
-            }
+            },
+            checks: [60202, 60205, 60208, 60211, 60214, 60217, 60220]
         },
         spiral: {
             caption: 'Spiral Cave',
@@ -289,7 +311,8 @@
                 return (items.glove || items.flute) && (items.hookshot || items.mirror && items.hammer) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
-            }
+            },
+            checks: [59839]
         },
         island_dm: {
             caption: 'Floating Island {mirror}',
@@ -299,7 +322,8 @@
                         items.lantern || items.flute ? 'available' : 'dark' :
                         'possible' :
                     'unavailable';
-            }
+            },
+            checks: [1573185]
         },
         mimic: {
             caption: medallion_caption('Mimic Cave ({mirror} outside of Turtle Rock)(Yellow = {medallion} unkown OR possible w/out {firerod})', 'turtle'),
@@ -311,19 +335,22 @@
                 return items.firerod ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'possible';
-            }
+            },
+            checks: [59845]
         },
         graveyard_w: {
             caption: 'West of Sanctuary {boots}',
             is_available: function(items) {
                 return items.boots ? 'available' : 'unavailable';
-            }
+            },
+            checks: [0xeb3f]
         },
         graveyard_n: {
             caption: 'Graveyard Cliff Cave {mirror}',
             is_available: function(items) {
                 return items.can_reach_outcast() && items.mirror ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1572868]
         },
         graveyard_e: {
             caption: 'King\'s Tomb {boots} + {glove2}/{mirror}',
@@ -331,25 +358,29 @@
                 if (!items.boots) return 'unavailable';
                 if (items.can_reach_outcast() && items.mirror || items.glove === 2) return 'available';
                 return 'unavailable';
-            }
+            },
+            checks: [59770]
         },
         witch: {
             caption: 'Witch: Give her {mushroom}',
             is_available: function(items) {
                 return items.mushroom ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1572884]
         },
         fairy_lw: {
             caption: 'Waterfall of Wishing (2) {flippers}',
             is_available: function(items) {
                 return items.flippers ? 'available' : 'unavailable';
-            }
+            },
+            checks: [59824, 59857]
         },
         zora: {
             caption: 'King Zora: Pay 500 rupees',
             is_available: function(items) {
                 return items.flippers || items.glove ? 'available' : 'unavailable';
-            }
+            },
+            checks: [975299]
         },
         river: {
             caption: 'Zora River Ledge {flippers}',
@@ -357,49 +388,59 @@
                 return items.flippers ? 'available' :
                     items.glove ? 'possible' :
                     'unavailable';
-            }
+            },
+            checks: [1573193]
         },
         well: {
             caption: 'Kakariko Well (4 + {bomb})',
-            is_available: always
+            is_available: always,
+            checks: [60046, 60049, 60052, 60055, 60058]
         },
         thief_hut: {
             caption: 'Thieve\'s Hut (4 + {bomb})',
-            is_available: always
+            is_available: always,
+            checks: [60175, 60178, 60181, 60184, 60187]
         },
         bottle: {
             caption: 'Bottle Vendor: Pay 100 rupees',
-            is_available: always
+            is_available: always,
+            checks: [191256]
         },
         chicken: {
             caption: 'Chicken House {bomb}',
-            is_available: always
+            is_available: always,
+            checks: [59881]
         },
         kid: {
             caption: 'Dying Boy: Distract him with {bottle} so that you can rob his family!',
             is_available: function(items) {
                 return items.bottle ? 'available' : 'unavailable';
-            }
+            },
+            checks: [211407]
         },
         tavern: {
             caption: 'Tavern',
-            is_available: always
+            is_available: always,
+            checks: [59854]
         },
         frog: {
             caption: 'Take the frog home {mirror} / Save+Quit',
             is_available: function(items) {
                 return items.moonpearl && items.glove === 2 ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1572906]
         },
         bat: {
             caption: 'Mad Batter {hammer}/{mirror} + {powder}',
             is_available: function(items) {
                 return items.powder && (items.hammer || items.glove === 2 && items.mirror && items.moonpearl) ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1572885]
         },
         sahasrahla_hut: {
             caption: 'Sahasrahla\'s Hut (3) {bomb}/{boots}',
-            is_available: always
+            is_available: always,
+            checks: [60034, 60037, 60040]
         },
         sahasrahla: {
             caption: 'Sahasrahla {pendant0}',
@@ -408,39 +449,46 @@
                     var dungeon = model.dungeons[name];
                     return dungeon.prize === 1 && dungeon.completed ? 'available' : state;
                 }, 'unavailable');
-            }
+            },
+            checks: [193020]
         },
         maze: {
             caption: 'Race Minigame {bomb}/{boots}',
-            is_available: always
+            is_available: always,
+            checks: [1573186]
         },
         library: {
             caption: 'Library {boots}',
             is_available: function(items) {
                 return items.boots ? 'available' : 'possible';
-            }
+            },
+            checks: [1572882]
         },
         dig_grove: {
             caption: 'Buried Itam {shovel}',
             is_available: function(items) {
                 return items.shovel ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1573194]
         },
         desert_w: {
             caption: 'Desert West Ledge {book}/{mirror}',
             is_available: function(items) {
                 return items.book || items.flute && items.glove === 2 && items.mirror ? 'available' : 'possible';
-            }
+            },
+            checks: [1573187]
         },
         desert_ne: {
             caption: 'Checkerboard Cave {mirror}',
             is_available: function(items) {
                 return items.flute && items.glove === 2 && items.mirror ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1572869]
         },
         aginah: {
             caption: 'Aginah\'s Cave {bomb}',
-            is_available: always
+            is_available: always,
+            checks: [59890]
         },
         bombos: {
             caption: 'Bombos Tablet {mirror}{sword2}{book}',
@@ -448,25 +496,30 @@
                 return items.book && items.mirror && (items.can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ?
                     items.sword >= 2 ? 'available' : 'possible' :
                     'unavailable';
-            }
+            },
+            checks: [1572887]
         },
         grove_s: {
             caption: 'South of Grove {mirror}',
             is_available: function(items) {
                 return items.mirror && (items.can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1572867]
         },
         dam: {
             caption: 'Light World Swamp (2)',
-            is_available: always
+            is_available: always,
+            checks: [59788, 1573189]
         },
         lake_sw: {
             caption: 'Minimoldorm Cave (NPC + 4) {bomb}',
-            is_available: always
+            is_available: always,
+            checks: [60226, 60229, 60232, 60235, 1572880]
         },
         ice_cave: {
             caption: 'Ice Rod Cave {bomb}',
-            is_available: always
+            is_available: always,
+            checks: [60238]
         },
         island_lake: {
             caption: 'Lake Hylia Island {mirror}',
@@ -475,42 +528,50 @@
                     items.moonpearl && items.mirror && (items.agahnim || items.glove === 2 || items.glove && items.hammer) ?
                         'available' : 'possible' :
                     'unavailable';
-            }
+            },
+            checks: [1573188]
         },
         hobo: {
             caption: 'Fugitive under the bridge {flippers}',
             is_available: function(items) {
                 return items.flippers ? 'available' : 'unavailable';
-            }
+            },
+            checks: [212605]
         },
         link_house: {
             caption: 'Stoops Lonk\'s Hoose',
-            is_available: always
+            is_available: always,
+            checks: [59836]
         },
         secret: {
             caption: "Castle Secret Entrance (Uncle + 1)",
-            is_available: always
+            is_available: always,
+            checks: [188229, 59761]
         },
         castle: {
             caption: 'Hyrule Castle Dungeon (3)',
-            is_available: always
+            is_available: always,
+            checks: [59764, 60172, 60169]
         },
         escape_dark: {
             caption: 'Escape Sewer Dark Room {lantern}',
             is_available: function(items) {
                 return items.lantern ? 'available' : 'dark';
-            }
+            },
+            checks: [59758]
         },
         escape_side: {
             caption: 'Escape Sewer Side Room (3) {bomb}/{boots} (yellow = need small key)',
             is_available: function(items) {
                 return items.glove ? 'available' :
                     items.lantern ? 'possible' : 'dark';
-            }
+            },
+            checks: [60253, 60256, 60259]
         },
         sanctuary: {
             caption: 'Sanctuary',
-            is_available: always
+            is_available: always,
+            checks: [60025]
         },
         bumper: {
             caption: 'Bumper Cave {cape}',
@@ -519,7 +580,8 @@
                 return items.can_reach_outcast() ?
                     items.glove && items.cape ? 'available' : 'possible' :
                     'unavailable';
-            }
+            },
+            checks: [1573190]
         },
         spike: {
             caption: 'Byrna Spike Cave',
@@ -528,7 +590,8 @@
                 return items.moonpearl && items.glove && items.hammer && (items.byrna || items.cape) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
-            }
+            },
+            checks: [60043]
         },
         bunny: {
             caption: 'Super Bunny Chests (2)',
@@ -537,7 +600,8 @@
                 return items.moonpearl && items.glove === 2 && (items.hookshot || items.mirror && items.hammer) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
-            }
+            },
+            checks: [60028, 60031]
         },
         rock_hook: {
             caption: 'Cave Under Rock (3 top chests) {hookshot}',
@@ -546,7 +610,8 @@
                 return items.moonpearl && items.glove === 2 && items.hookshot ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
-            }
+            },
+            checks: [60241, 60244, 60247]
         },
         rock_boots: {
             caption: 'Cave Under Rock (bottom chest) {hookshot}/{boots}',
@@ -555,7 +620,8 @@
                 return items.moonpearl && items.glove === 2 && (items.hookshot || (items.mirror && items.hammer && items.boots)) ?
                     items.lantern || items.flute ? 'available' : 'dark' :
                     'unavailable';
-            }
+            },
+            checks: [60250]
         },
         catfish: {
             caption: 'Catfish',
@@ -563,42 +629,48 @@
             is_available: function(items) {
                 return items.moonpearl && items.glove && (items.agahnim || items.hammer || items.glove === 2 && items.flippers) ?
                     'available' : 'unavailable';
-            }
+            },
+            checks: [975237]
         },
         chest_game: {
             caption: 'Treasure Chest Minigame: Pay 30 rupees',
             darkworld: true,
             is_available: function(items) {
                 return items.can_reach_outcast() ? 'available' : 'unavailable';
-            }
+            },
+            checks: [60840]
         },
         c_house: {
             caption: 'C House',
             darkworld: true,
             is_available: function(items) {
                 return items.can_reach_outcast() ? 'available' : 'unavailable';
-            }
+            },
+            checks: [59887]
         },
         bomb_hut: {
             caption: 'Bombable Hut {bomb}',
             darkworld: true,
             is_available: function(items) {
                 return items.can_reach_outcast() ? 'available' : 'unavailable';
-            }
+            },
+            checks: [59884]
         },
         purple: {
             caption: 'Gary\'s Lunchbox (save the frog first)',
             darkworld: true,
             is_available: function(items) {
                 return items.moonpearl && items.glove === 2 ? 'available' : 'unavailable';
-            }
+            },
+            checks: [212328]
         },
         pegs: {
             caption: '{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}{hammer}!!!!!!!!',
             darkworld: true,
             is_available: function(items) {
                 return items.moonpearl && items.glove === 2 && items.hammer ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1572870]
         },
         fairy_dw: {
             caption: 'Fat Fairy: Buy OJ bomb from Dark Link\'s House after {crystal}5 {crystal}6 (2 items)',
@@ -612,7 +684,8 @@
                 if (crystal_count < 2 || !items.moonpearl) return 'unavailable';
                 return items.hammer && (items.agahnim || items.glove) ||
                     items.agahnim && items.mirror && items.can_reach_outcast() ? 'available' : 'unavailable';
-            }
+            },
+            checks: [59776, 59779]
         },
         pyramid: {
             caption: 'Pyramid',
@@ -620,35 +693,40 @@
             is_available: function(items) {
                 return items.agahnim || items.glove && items.hammer && items.moonpearl ||
                     items.glove === 2 && items.moonpearl && items.flippers ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1573191]
         },
         dig_game: {
             caption: 'Alec Baldwin\'s Dig-a-Thon: Pay 80 rupees',
             darkworld: true,
             is_available: function(items) {
                 return items.can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
-            }
+            },
+            checks: [1573192]
         },
         stumpy: {
             caption: 'Ol\' Stumpy',
             darkworld: true,
             is_available: function(items) {
                 return items.can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer ? 'available' : 'unavailable';
-            }
+            },
+            checks: [209095]
         },
         swamp_ne: {
             caption: 'Hype Cave! {bomb} (NPC + 4 {bomb})',
             darkworld: true,
             is_available: function(items) {
                 return items.can_reach_outcast() || (items.agahnim && items.moonpearl && items.hammer) ? 'available' : 'unavailable';
-            }
+            },
+            checks: [60190, 60193, 60196, 60199, 1572881]
         },
         mire_w: {
             caption: 'West of Mire (2)',
             darkworld: true,
             is_available: function(items) {
                 return items.moonpearl && items.flute && items.glove === 2 ? 'available' : 'unavailable';
-            }
+            },
+            checks: [60019, 60022]
         }
     };
 
@@ -775,4 +853,48 @@
             chests: { standard: standard_chests, open: chests }[mode]
         };
     };
+    
+    window.getCheckFromMemId = function(memId) {
+        let check = {
+            isComplete: false,
+            func: null,
+            name: null
+        };
+            
+        for (const [key, value] of Object.entries(dungeons)) {
+            if(value.checks.includes(memId)) {
+                check.func = "chest_click";
+                check.name = key;
+                value.checks.splice(value.checks.indexOf(memId), 1);
+                if(value.checks.length < 1) {
+                    check.isComplete = true;
+                }
+                return check;
+            }
+        }
+        for (const [key, value] of Object.entries(encounters)) {
+            if(value.checks.includes(memId)) {
+                check.func = "tower_chest_click";
+                check.name = key;
+                value.checks.splice(value.checks.indexOf(memId), 1);
+                if(value.checks.length < 1) {
+                    check.isComplete = true;
+                }
+                return check;
+            }
+        }
+        for (const [key, value] of Object.entries(chests)) {
+            if(value.checks.includes(memId)) {
+                check.func = "map_chest_click";
+                check.name = key;
+                value.checks.splice(value.checks.indexOf(memId), 1);
+                if(value.checks.length < 1) {
+                    check.isComplete = true;
+                }
+                return check;
+            }
+        }
+        
+        return check;
+    }
 }(window));

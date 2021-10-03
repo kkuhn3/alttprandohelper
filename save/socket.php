@@ -14,6 +14,7 @@ class Socket implements MessageComponentInterface {
 
     public function onOpen(ConnectionInterface $conn) {
         // Store the new connection in $this->clients
+		echo "New connection!";
         $this->clients->attach($conn);
         echo "New connection! ({$conn->resourceId})\n";
     }
