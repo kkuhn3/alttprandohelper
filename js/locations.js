@@ -863,23 +863,18 @@
             
         for (const [key, value] of Object.entries(dungeons)) {
             if(value.checks.includes(memId)) {
-                check.func = "chest_click";
-                check.name = key;
-                value.checks.splice(value.checks.indexOf(memId), 1);
-                if(value.checks.length < 1) {
-                    check.isComplete = true;
+                if(memId > 1573199) {
+                    if(memId !== 1573216 && memId !== 1573218) {
+                        check.isComplete = true;
+                        check.func = "boss_click";
+                        check.name = key;
+                    }
                 }
                 return check;
             }
         }
         for (const [key, value] of Object.entries(encounters)) {
             if(value.checks.includes(memId)) {
-                check.func = "tower_chest_click";
-                check.name = key;
-                value.checks.splice(value.checks.indexOf(memId), 1);
-                if(value.checks.length < 1) {
-                    check.isComplete = true;
-                }
                 return check;
             }
         }
