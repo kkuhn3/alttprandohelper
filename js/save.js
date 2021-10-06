@@ -37,4 +37,57 @@
     // Create WebSocket connection.
     window.socket = new WebSocket('ws://127.0.0.1:7979/alttprandohelper');
 
+    window.getSpoiler = async function(iid) {
+        let spoiler = {};
+        const locationsRes = await fetch('./static/locations.json', {
+            method: 'GET'
+        });
+        let locationToIds = await locationsRes.json();
+        const itemRes = await fetch('./static/items.json', {
+            method: 'GET'
+        });
+        let itemsToIds = await itemRes.json();
+        // hard coded... we could prompt a user in the future
+        const spoilerRes = await fetch('./static/spoiler.txt', {
+            method: 'GET'
+        });
+        let spoilerStr = await spoilerRes.text();
+        let spoilerLines = spoilerStr.split(/\r\n|\r|\n/);
+        let islocationsLinePassed = false;
+        for(let line of spoilerLines) {
+            if(islocationsLinePassed) {
+                if(line != "") {
+                    if(line == "Shops:") {
+                        islocationsLinePassed = false;
+                    }
+                    // Exculde locations that don't give items but "story" progress
+                    else if(
+                            !line.includes("Agahnim ") && 
+                            !line.includes("Prize") && 
+                            !line.includes("Ganon ") && 
+                            !line.includes("Missing Smith ") &&
+                            !line.includes("Open Floodgate") &&
+                            !line.includes("Pick Up Purple Chest") &&
+                            !line.includes("Get Frog") &&
+                            !line.includes("Activated Flute")) {
+                        let locItemCouple = line.split(": ");
+                        if(locItemCouple[0].includes(iid)) {
+                            let loc = locItemCouple[0].split(" (")[0];
+                            let item = locItemCouple[1].split(" (")[0];
+                            let itemId = itemsToIds[item];
+                            if(itemId && !locItemCouple[1].includes(iid)) {
+                                itemId = "no-op";
+                            }
+                            spoiler[parseInt(locationToIds[loc], 16)] = itemId;
+                        }
+                    }
+                }
+            }
+            if(line === "Locations:") {
+                islocationsLinePassed = true;
+            }
+        }
+        return spoiler;
+    }
+    
 }(window));

@@ -374,7 +374,9 @@
 
         componentDidMount: async function(){
             window.id = this.props.query.id;
+            window.auto = this.props.query.auto;
             let loadState = await window.get(window.id);
+            window.spoiler = await window.getSpoiler(window.id);
             for(const [statekey, statevalue] of Object.entries(loadState)) {
                 if(statekey === "chests") {
                     for(const [key, value] of Object.entries(loadState["chests"])) {
@@ -420,12 +422,16 @@
                 }
                 else {
                     let msgObj = JSON.parse(event.data);
-                    if(Array.isArray(msgObj) && window.id === "auto") {
+                    if(Array.isArray(msgObj) && window.auto) {
                         for(const [k, msg] of Object.entries(msgObj)) {
                             for(const [kk, memId] of Object.entries(msg.locations)) {
-                                let check = window.getCheckFromMemId(memId);
-                                if(check.isComplete) {
+                                let checks = window.getCheckFromMemId(memId);
+                                for(let check of checks) {
                                     this[check.func](check.name, true);
+                                }
+                                let item = window.spoiler[memId];
+                                if(item && item !== "no-op") {
+                                    this["item_click"](item, true);
                                 }
                             }
                         }

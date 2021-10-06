@@ -3,7 +3,7 @@
 
     var items = {
         has_melee: function() { return this.sword || this.hammer; },
-        has_bow: function() { return this.bow > 1; },
+        has_bow: function() { return this.bow > 0; },
         has_melee_bow: function() { return this.has_melee() || this.has_bow(); },
         has_cane: function() { return this.somaria || this.byrna; },
         has_rod: function() { return this.firerod || this.icerod; },
@@ -27,8 +27,8 @@
             sword: { max: 4 },
             shield: { max: 3 },
             bottle: { max: 4 },
-            bow: { max: 3 },
-            boomerang: { max: 3 },
+            bow: { max: 2 },
+            boomerang: { max: 2 },
             glove: { max: 2 }
         })
     };

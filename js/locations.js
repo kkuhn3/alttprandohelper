@@ -855,41 +855,55 @@
     };
     
     window.getCheckFromMemId = function(memId) {
-        let check = {
-            isComplete: false,
-            func: null,
-            name: null
-        };
+        let checks = [];
             
         for (const [key, value] of Object.entries(dungeons)) {
             if(value.checks.includes(memId)) {
                 if(memId > 1573199) {
                     if(memId !== 1573216 && memId !== 1573218) {
-                        check.isComplete = true;
-                        check.func = "boss_click";
-                        check.name = key;
+                        let bossCheck = {
+                            func: "boss_click",
+                            name: key
+                        }
+                        checks.push(bossCheck);
                     }
                 }
-                return check;
+                if(window.spoiler[memId]) {
+                    let dungeonCheck = {
+                        func: "chest_click",
+                        name: key
+                    }
+                    checks.push(dungeonCheck);
+                }
+                return checks;
             }
         }
         for (const [key, value] of Object.entries(encounters)) {
             if(value.checks.includes(memId)) {
-                return check;
+                if(window.spoiler[memId]) {
+                    let towerCheck = {
+                        func: "tower_chest_click",
+                        name: key
+                    }
+                    checks.push(dungeonCheck);
+                }
+                return checks;
             }
         }
         for (const [key, value] of Object.entries(chests)) {
             if(value.checks.includes(memId)) {
-                check.func = "map_chest_click";
-                check.name = key;
                 value.checks.splice(value.checks.indexOf(memId), 1);
                 if(value.checks.length < 1) {
-                    check.isComplete = true;
+                    let chestCheck = {
+                        func: "map_chest_click",
+                        name: key
+                    }
+                    checks.push(chestCheck);
                 }
-                return check;
+                return checks;
             }
         }
         
-        return check;
+        return checks;
     }
 }(window));
