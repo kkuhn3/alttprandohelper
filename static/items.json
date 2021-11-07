@@ -28,9 +28,14 @@
     "Cape": "cape",
     "Bombos": "bombos",
     "Shovel": "shovel",
-    
+
     "Boss Heart Container": "no-op",
     "Piece of Heart": "no-op",
     "Magic Upgrade": "no-op",
-    "Sanctuary Heart Container": "no-op"
+    "Sanctuary Heart Container": "no-op",
+    "Rupees": "no-op",
+    "Bombs": "no-op",
+    "Arrows": "no-op",
+    "Single Arrow": "no-op",
+    "Rupee": "no-op"
 }

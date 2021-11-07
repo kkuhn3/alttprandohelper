@@ -424,14 +424,16 @@
                     let msgObj = JSON.parse(event.data);
                     if(Array.isArray(msgObj) && window.auto) {
                         for(const [k, msg] of Object.entries(msgObj)) {
-                            for(const [kk, memId] of Object.entries(msg.locations)) {
-                                let checks = window.getCheckFromMemId(memId);
-                                for(let check of checks) {
-                                    this[check.func](check.name, true);
-                                }
-                                let item = window.spoiler[memId];
-                                if(item && item !== "no-op") {
-                                    this["item_click"](item, true);
+                            if(msg.locations) {
+                                for(const [kk, memId] of Object.entries(msg.locations)) {
+                                    let checks = window.getCheckFromMemId(memId);
+                                    for(let check of checks) {
+                                        this[check.func](check.name, true);
+                                    }
+                                    let item = window.spoiler[memId];
+                                    if(item && item !== "no-op") {
+                                        this["item_click"](item, true);
+                                    }
                                 }
                             }
                         }

@@ -885,7 +885,7 @@
                         func: "tower_chest_click",
                         name: key
                     }
-                    checks.push(dungeonCheck);
+                    checks.push(towerCheck);
                 }
                 return checks;
             }
