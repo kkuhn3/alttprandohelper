@@ -16,9 +16,9 @@
 
         medallion_check: function(medallion) {
             if (!this.sword || !this.bombos && !this.ether && !this.quake) return 'unavailable';
-            if (medallion === 1 && !this.bombos ||
-                medallion === 2 && !this.ether ||
-                medallion === 3 && !this.quake) return 'unavailable';
+            if ((medallion === 1 && !this.bombos) ||
+                (medallion === 2 && !this.ether) ||
+                (medallion === 3 && !this.quake)) return 'unavailable';
             if (medallion === 0 && !(this.bombos && this.ether && this.quake)) return 'possible';
         },
 

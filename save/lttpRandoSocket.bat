@@ -1,1 +1,0 @@
-php C:\Users\Karl\Documents\Git\alttprandohelper\save\app.php

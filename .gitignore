@@ -1,3 +1,2 @@
 save/saves/*.json
-save/vendor
-save/composer.lock
+static/spoiler.txt
