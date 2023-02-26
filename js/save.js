@@ -35,9 +35,10 @@
     }
     
     // Create WebSocket connection.
-    window.socket = new WebSocket('ws://127.0.0.1:7979/');
+    window.socket = new WebSocket(window.socketUrl);
 
     window.getSpoiler = async function(iid) {
+        let myiid = "("+iid+"1)";
         let spoiler = {};
         const locationsRes = await fetch('./static/locations.json', {
             method: 'GET'
@@ -71,11 +72,11 @@
                             !line.includes("Get Frog") &&
                             !line.includes("Activated Flute")) {
                         let locItemCouple = line.split(": ");
-                        if(locItemCouple[0].includes(iid)) {
+                        if(locItemCouple[0].includes(myiid) || !locItemCouple[0].includes("1)")) {
                             let loc = locItemCouple[0].split(" (")[0];
                             let item = locItemCouple[1].split(" (")[0];
                             let itemId = itemsToIds[item];
-                            if(itemId && !locItemCouple[1].includes(iid)) {
+                            if(itemId && !(locItemCouple[1].includes(iid) || !locItemCouple[1].includes("1)"))) {
                                 itemId = "no-op";
                             }
                             spoiler[parseInt(locationToIds[loc], 16)] = itemId;
