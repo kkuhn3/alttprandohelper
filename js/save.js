@@ -58,7 +58,7 @@
         for(let line of spoilerLines) {
             if(islocationsLinePassed) {
                 if(line != "") {
-                    if(line == "Shops:") {
+                    if(line == "Playthrough:" || line == "Shops:" || line == "Medallions:" || line == "Entrances:") {
                         islocationsLinePassed = false;
                     }
                     // Exculde locations that don't give items but "story" progress
