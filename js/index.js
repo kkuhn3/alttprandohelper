@@ -12,14 +12,15 @@
 
     function launch_tracker() {
         var params = {
-                mode: this.getAttribute('data-mode'),
-                hmap: this.getAttribute('data-map') === 'hmap',
-                vmap: this.getAttribute('data-map') === 'vmap',
+                mode: document.getElementById('mode').value,
+                hmap: document.getElementById('layout').value === "hmap",
+                vmap: document.getElementById('layout').value === "vmap",
                 sprite: document.getElementById('sprite').value,
                 scale: document.getElementById('scale').value,
                 bg: document.getElementById('background-color').value ||
                     document.getElementById('custom-color').value,
-                id: document.getElementById('save-id').value
+                id: document.getElementById('save-id').value,
+                arch: document.getElementById('arch-id').value
             },
             size = function(scale, size) {
                 return {
@@ -51,7 +52,8 @@
             params.sprite && 'sprite='+params.sprite,
             params.scale && 'scale='+params.scale,
             !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg),
-            params.id && 'id='+params.id
+            params.id && 'id='+params.id,
+            params.arch && 'arch='+params.arch
         ]).join('&');
     }
 

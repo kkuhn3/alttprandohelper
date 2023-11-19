@@ -5,28 +5,34 @@
   <title>launching ALttP tracker</title>
   <script src="js/util.js"></script>
   <script src="js/index.js"></script>
-  <style>
-  body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
-  label { width: 9em; display: inline-block; }
-  div { margin: 5px 0; }
-  .hidden { display: none; }
-  .invalid { background-color: #ffcccc; }
-  </style>
+  <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-
   <div>
-    <label>Standard</label>
-    <button type="button" class="launch" data-mode="standard" data-map="no">Tracker only</button>
-    <button type="button" class="launch" data-mode="standard" data-map="hmap">Horizontal map</button>
-    <button type="button" class="launch" data-mode="standard" data-map="vmap">Vertical map</button>
+    <label>Save Id</label>
+    <input type="text" id="save-id" />
   </div>
 
   <div>
-    <label>Open</label>
-    <button type="button" class="launch" data-mode="open" data-map="no">Tracker only</button>
-    <button type="button" class="launch" data-mode="open" data-map="hmap">Horizontal map</button>
-    <button type="button" class="launch" data-mode="open" data-map="vmap">Vertical map</button>
+    <label>Archipelago Address</label>
+    <input type="text" id="arch-id" />
+  </div>
+
+  <div>
+    <label>Mode</label>
+    <select id="mode">
+      <option value="standard" selected>Standard</option>
+      <option value="open">Open</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Layout</label>
+    <select id="layout">
+      <option value="no">Tracker only</option>
+      <option value="hmap" selected>Horizontal map</option>
+      <option value="vmap">Vertical map</option>
+    </select>
   </div>
 
   <div>
@@ -104,7 +110,7 @@
       <option value="">Unscaled 100%</option>
       <option value="90">Scaled 90%</option>
       <option value="80">Scaled 80%</option>
-      <option value="70">Scaled 70%</option>
+      <option selected value="70">Scaled 70%</option>
       <option value="60">Scaled 60%</option>
     </select>
   </div>
@@ -122,10 +128,10 @@
   </div>
   
   <div>
-    <label>Save Id</label>
-    <input type="text" id="save-id" />
+    <label>Let's Go</label>
+    <button type="button" class="launch">Launch</button>
   </div>
-
+  
   <script>start()</script>
 
 </body>
