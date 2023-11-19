@@ -78,7 +78,7 @@
         agahnim: false
     });
 
-    var standard_items = update(open_items, { sword: { $set: 1 } });
+    var standard_items = open_items;
 
     window.item_model = function(mode) {
         return { items: { standard: standard_items, open: open_items }[mode] };

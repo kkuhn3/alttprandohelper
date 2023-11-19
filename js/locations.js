@@ -854,21 +854,19 @@
         };
     };
     
-    window.getCheckFromMemId = function(memId) {
+    window.getCheckFromMemId = function(memId, isItem) {
         let checks = [];
             
         for (const [key, value] of Object.entries(dungeons)) {
             if(value.checks.includes(memId)) {
-                if(memId > 1573199) {
-                    if(memId !== 1573216 && memId !== 1573218) {
-                        let bossCheck = {
-                            func: "boss_click",
-                            name: key
-                        }
-                        checks.push(bossCheck);
+                if(memId > 1573199 && memId !== 1573216 && memId !== 1573218) {
+                    let bossCheck = {
+                        func: "boss_click",
+                        name: key
                     }
+                    checks.push(bossCheck);
                 }
-                if(window.spoiler[memId]) {
+                if (isItem) {
                     let dungeonCheck = {
                         func: "chest_click",
                         name: key
@@ -880,7 +878,7 @@
         }
         for (const [key, value] of Object.entries(encounters)) {
             if(value.checks.includes(memId)) {
-                if(window.spoiler[memId]) {
+                if (isItem) {
                     let towerCheck = {
                         func: "tower_chest_click",
                         name: key
@@ -905,5 +903,46 @@
         }
         
         return checks;
+    }
+
+    const itemToIds = {
+        'tunic':[96],
+        'sword':[94],
+        'shield':[95],
+        'moonpearl':[31],
+        'bow':[100, 101],
+        'boomerang':[12, 42],
+        'hookshot':[10],
+        'mushroom':[41],
+        'powder':[13],
+        'firerod':[7],
+        'icerod':[8],
+        'bombos':[15],
+        'ether':[16],
+        'quake':[17],
+        'lantern':[18],
+        'hammer':[9],
+        'shovel':[19],
+        'net':[33],
+        'book':[29],
+        'bottle':[22, 43, 44, 45, 61, 60, 72],
+        'somaria':[21],
+        'byrna':[24],
+        'cape':[25],
+        'mirror':[26],
+        'boots':[75],
+        'glove':[97],
+        'flippers':[30],
+        'flute':[20],
+        'dungeonItem':[162, 157, 141, 125, 163, 156, 140, 124, 170, 149, 133, 117, 160, 159, 143, 127, 164, 166, 153, 137, 121, 171, 148, 132, 116, 168, 151, 135, 119, 165, 154, 138, 122, 169, 150, 134, 118, 167, 152, 136, 120, 172, 147, 131, 115, 173, 146, 130, 114]
+    }
+
+    window.getItemFromId = function(itemId) {
+        for (const [key, value] of Object.entries(itemToIds)) {
+            if (value.includes(itemId)) {
+                return key;
+            }
+        }
+        return 'noop';
     }
 }(window));

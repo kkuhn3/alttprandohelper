@@ -374,9 +374,8 @@
 
         componentDidMount: async function(){
             window.id = this.props.query.id;
-            window.auto = this.props.query.auto;
+            window.arch = this.props.query.arch;
             let loadState = await window.get(window.id);
-            window.spoiler = await window.getSpoiler(window.id);
             for(const [statekey, statevalue] of Object.entries(loadState)) {
                 if(statekey === "chests") {
                     for(const [key, value] of Object.entries(loadState["chests"])) {
@@ -403,112 +402,167 @@
                     }
                 }
             }
-            
-            // Connection opened
-            window.socket.addEventListener('open', function (event) {});
-            
-            // Listen for messages
-            window.socket.addEventListener('message', function (event) {
-                console.log(event.data);
-                if(event.data === "pong") {
-                    let end = Date.now();
-                    let delta = end - window.start;
-                    let loPings = [];
-                    if(localStorage.getItem('kpow2Pings') != null){
-                        loPings = JSON.parse(localStorage.getItem('kpow2Pings'));
+
+            if (window.arch) {
+                window.socket = new WebSocket(window.arch);
+                
+                window.socket.addEventListener('message', function (event) {
+                    console.log(event.data);
+                    const message = JSON.parse(event.data);
+                    let commands = [];
+                    for (let command of message) {
+                        commands.push(command.cmd);
                     }
-                    loPings.push(delta);
-                    localStorage.setItem("kpow2Pings", JSON.stringify(loPings));
-                }
-                else {
-                    let msgObj = JSON.parse(event.data);
-                    if(Array.isArray(msgObj) && window.auto) {
-                        for(const [k, msg] of Object.entries(msgObj)) {
-                            if(msg.locations) {
-                                for(const [kk, memId] of Object.entries(msg.locations)) {
-                                    let checks = window.getCheckFromMemId(memId);
-                                    for(let check of checks) {
-                                        this[check.func](check.name, true);
+
+                    // seems to be an initial connect response
+                    if (commands.includes("Connected") && commands.includes("ReceivedItems")) {
+                        // Get slot info
+                        let slot = 0;
+                        for (let command of message) {
+                            if (command.cmd === "Connected") {
+                                slot = command.slot;
+                            }
+                        }
+
+                        // Get item info
+                        let dungeonItemLocations = [];
+                        for (let command of message) {
+                            if (command.cmd === "ReceivedItems") {
+                                let countableItems = {
+                                    "tunic":0,
+                                    "sword":0,
+                                    "shield":0,
+                                    "bow":0,
+                                    "boomerang":0,
+                                    "bottle":0,
+                                    "glove":0
+                                };
+                                for (let item of command.items) {
+                                    const itemName = window.getItemFromId(item.item);
+                                    if (itemName === "dungeonItem") {
+                                        if (item.player === slot) {
+                                            dungeonItemLocations.push(item.location);
+                                        }
                                     }
-                                    let item = window.spoiler[memId];
-                                    if(item && item !== "no-op") {
-                                        this["item_click"](item, true);
+                                    else if (itemName !== "noop") {
+                                        if (countableItems[itemName] > -1) {
+                                            countableItems[itemName] = countableItems[itemName] + 1;
+                                            this.setState(update(this.state, { items: at(itemName, { $set: countableItems[itemName] }) }));
+                                        }
+                                        else {
+                                            this.setState(update(this.state, { items: at(itemName, { $set: true }) }));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // go through each check
+                        for (let command of message) {
+                            if (command.cmd === "Connected") {
+                                let countableChecks = {
+                                    'tower':0,
+                                    'eastern':0,
+                                    'desert':0,
+                                    'hera':0,
+                                    'darkness':0,
+                                    'swamp':0,
+                                    'skull':0,
+                                    'thieves':0,
+                                    'ice':0,
+                                    'mire':0,
+                                    'turtle':0
+                                };
+                                for (let location of command.checked_locations) {
+                                    const isItem = !dungeonItemLocations.includes(location);
+                                    let checks = window.getCheckFromMemId(location, isItem);
+                                    for (let check of checks) {
+                                        if (check.func === "boss_click") {
+                                            this.setState(update(this.state, { dungeons: at(check.name, { completed: { $set: true } }) }));
+                                        }
+                                        else if (check.func === "chest_click") {
+                                            countableChecks[check.name] = countableChecks[check.name] + 1;
+                                            const chestsLeft = this.state.dungeons[check.name].chest_limit - countableChecks[check.name];
+                                            this.setState(update(this.state, { dungeons: at(check.name, { chests: { $set: chestsLeft } }) }));
+                                        }
+                                        else if (check.func === "tower_chest_click") {
+                                            countableChecks[check.name] = countableChecks[check.name] + 1;
+                                            const chestsLeft = this.state.encounters[check.name].chest_limit - countableChecks[check.name];
+                                            this.setState(update(this.state, { encounters: at(check.name, { chests: { $set: chestsLeft } }) }));
+                                        }
+                                        else {
+                                            this.setState(update(this.state, { chests: at(check.name, { marked: { $set: true } }) }));
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                    else if(msgObj.id === window.id || msgObj.id === typeof window.id) {
-                        this[msgObj.func](msgObj.name, true);
-                    }
-                }
-            }.bind(this))
+                }.bind(this));
+
+                window.socket.addEventListener('open', function (event) {
+                    window.socket.send(`[{
+                        "cmd" : "Connect",
+                        "password" : "",
+                        "game" : "A Link to the Past",
+                        "name" : "` + window.id + `",
+                        "tags" : ["Tracker"],
+                        "version" : {
+                            "major": 0,
+                            "minor": 4,
+                            "build": 3,
+                            "class": "Version"
+                        },
+                        "items_handling" : 7,
+                        "uuid" : "a1c0aac5-01e5-4957-99fe-6ae9edeafa78"
+                    }]`);
+                });
+            }
         },
 
-        item_click: async function(name, isRepeat) {
+        item_click: async function(name) {
             var items = this.state.items,
                 change = typeof items[name] === 'boolean' ?
                     { $toggle: [name] } :
                     at(name, { $set: items.inc(name) });
             await this.setState(update(this.state, { items: change }));
-            if(!isRepeat) {
-                await window.save(this.props.query.id, this.state);
-                window.send(this.props.query.id, "item_click", name);
-            }
+            await window.save(this.props.query.id, this.state);
         },
 
-        boss_click: async function(name, isRepeat) {
+        boss_click: async function(name) {
             await this.setState(update(this.state, { dungeons: at(name, { $toggle: ['completed'] }) }));
-            if(!isRepeat) {
-                await window.save(this.props.query.id, this.state);
-                window.send(this.props.query.id, "boss_click", name);
-            }
+            await window.save(this.props.query.id, this.state);
         },
 
-        prize_click: async function(name, isRepeat) {
+        prize_click: async function(name) {
             var value = counter(this.state.dungeons[name].prize, 1, 4);
             await this.setState(update(this.state, { dungeons: at(name, { prize: { $set: value } }) }));
-            if(!isRepeat) {
-                await window.save(this.props.query.id, this.state);
-                window.send(this.props.query.id, "prize_click", name);
-            }
+            await window.save(this.props.query.id, this.state);
         },
 
-        medallion_click: async function(name, isRepeat) {
+        medallion_click: async function(name) {
             var value = counter(this.state.dungeons[name].medallion, 1, 3);
             await this.setState(update(this.state, { dungeons: at(name, { medallion: { $set: value } }) }));
-            if(!isRepeat) {
-                await window.save(this.props.query.id, this.state);
-                window.send(this.props.query.id, "medallion_click", name);
-            }
+            await window.save(this.props.query.id, this.state);
         },
 
-        chest_click: async function(name, isRepeat) {
+        chest_click: async function(name) {
             var dungeon = this.state.dungeons[name],
                 value = counter(dungeon.chests, -1, dungeon.chest_limit);
             await this.setState(update(this.state, { dungeons: at(name, { chests: { $set: value } }) }));
-            if(!isRepeat) {
-                await window.save(this.props.query.id, this.state);
-                window.send(this.props.query.id, "chest_click", name);
-            }
+            await window.save(this.props.query.id, this.state);
         },
 
-        map_chest_click: async function(name, isRepeat) {
+        map_chest_click: async function(name) {
             await this.setState(update(this.state, { chests: at(name, { $toggle: ['marked'] }) }));
-            if(!isRepeat) {
-                await window.save(this.props.query.id, this.state);
-                window.send(this.props.query.id, "map_chest_click", name);
-            }
+            await window.save(this.props.query.id, this.state);
         },
         
-        tower_chest_click: async function(name, isRepeat) {
+        tower_chest_click: async function(name) {
             var encounter = this.state.encounters[name],
                 value = counter(encounter.chests, -1, encounter.chest_limit);
             await this.setState(update(this.state, { encounters: at(name, { chests: { $set: value } }) }));
-            if(!isRepeat) {
-                await window.save(this.props.query.id, this.state);
-                window.send(this.props.query.id, "tower_chest_click", name);
-            }
+            await window.save(this.props.query.id, this.state);
         }
     });
 
