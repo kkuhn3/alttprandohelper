@@ -1,8 +1,8 @@
 (function(window) {
 
     window.save = async function(iid, data) {
-        if(typeof iid === "undefined") {
-            iid = "";
+        if(typeof iid === "undefined" || iid === "") {
+            return;
         }
         let saveData = JSON.stringify({id: iid, state: JSON.stringify(data, undefined, 4)}, undefined, 4);
         await fetch('./save/save.php', {
@@ -12,8 +12,8 @@
     }
 
     window.get = async function(iid) {
-        if(typeof iid === "undefined") {
-            iid = "";
+        if(typeof iid === "undefined" || iid === "") {
+            return {};
         }
         let saveData = JSON.stringify({id: iid});
         const response = await fetch('./save/get.php', {

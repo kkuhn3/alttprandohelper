@@ -375,6 +375,7 @@
         componentDidMount: async function(){
             window.id = this.props.query.id;
             window.arch = this.props.query.arch;
+            window.slot = -1;
             let loadState = await window.get(window.id);
             for(const [statekey, statevalue] of Object.entries(loadState)) {
                 if(statekey === "chests") {
@@ -417,10 +418,9 @@
                     // seems to be an initial connect response
                     if (commands.includes("Connected") && commands.includes("ReceivedItems")) {
                         // Get slot info
-                        let slot = 0;
                         for (let command of message) {
                             if (command.cmd === "Connected") {
-                                slot = command.slot;
+                                window.slot = command.slot;
                             }
                         }
 
@@ -429,7 +429,7 @@
                         for (let command of message) {
                             if (command.cmd === "ReceivedItems") {
                                 let countableItems = {
-                                    "tunic":0,
+                                    "tunic":1,
                                     "sword":0,
                                     "shield":0,
                                     "bow":0,
@@ -494,6 +494,27 @@
                                             this.setState(update(this.state, { chests: at(check.name, { marked: { $set: true } }) }));
                                         }
                                     }
+                                }
+                            }
+                        }
+                    }
+                    // on the fly
+                    else if (commands.includes("PrintJSON")) {
+                        for (let command of message) {
+                            if (command.cmd === "PrintJSON" && command.type === "ItemSend") {
+                                const item = message[0].item;
+                                let itemName = "noop"; 
+                                if (message[0].receiving === window.slot) {
+                                    itemName = window.getItemFromId(item.item);
+                                }
+                                if (item.player === window.slot) {
+                                    const checks = window.getCheckFromMemId(item.location, itemName !== "dungeonItem");
+                                    for (let check of checks) {
+                                        this[check.func](check.name);
+                                    }
+                                }
+                                if (itemName !== "noop" && itemName !== "dungeonItem") {
+                                    this["item_click"](item);
                                 }
                             }
                         }
