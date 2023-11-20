@@ -514,7 +514,7 @@
                                     }
                                 }
                                 if (itemName !== "noop" && itemName !== "dungeonItem") {
-                                    this["item_click"](item);
+                                    this["item_click"](itemName);
                                 }
                             }
                         }
