@@ -745,6 +745,37 @@
         };
     }
 
+    for (const dungeonId in dungeons) {
+        const keyCount = dungeons[dungeonId].checks.length - dungeons[dungeonId].chest_limit - 3;
+        if (window.uri_query().ks) {
+            dungeons[dungeonId].chest_limit = dungeons[dungeonId].chest_limit + keyCount;
+        }
+        if (window.uri_query().bks) {
+            dungeons[dungeonId].chest_limit = dungeons[dungeonId].chest_limit + 1;
+        }
+        if (window.uri_query().ms) {
+            dungeons[dungeonId].chest_limit = dungeons[dungeonId].chest_limit + 1;
+        }
+        if (window.uri_query().cs) {
+            dungeons[dungeonId].chest_limit = dungeons[dungeonId].chest_limit + 1;
+        }
+    }
+
+    const towerKeyCount = encounters["tower"].checks.length - encounters["tower"].chest_limit - 3;
+    if (window.uri_query().ks) {
+        encounters["tower"].chest_limit = encounters["tower"].chest_limit + towerKeyCount;
+    }
+    if (window.uri_query().bks) {
+        encounters["tower"].chest_limit = encounters["tower"].chest_limit + 1;
+    }
+    if (window.uri_query().ms) {
+        encounters["tower"].chest_limit = encounters["tower"].chest_limit + 1;
+    }
+    if (window.uri_query().cs) {
+        encounters["tower"].chest_limit = encounters["tower"].chest_limit + 1;
+    }
+    encounters["tower"].chests = encounters["tower"].chest_limit;
+    
     dungeons = finalize_dungeons(dungeons,
         function(dungeon) { return update(dungeon, { $merge: { chests: dungeon.chest_limit } }); });
 

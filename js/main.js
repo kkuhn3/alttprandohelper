@@ -374,8 +374,6 @@
 
         componentDidMount: async function(){
             window.id = this.props.query.id;
-            window.arch = this.props.query.arch;
-            window.slot = -1;
             let loadState = await window.get(window.id);
             for(const [statekey, statevalue] of Object.entries(loadState)) {
                 if(statekey === "chests") {
@@ -404,9 +402,12 @@
                 }
             }
 
+            // Load from arch
+            window.arch = this.props.query.arch;
             if (window.arch) {
                 window.socket = new WebSocket(window.arch);
                 
+                window.slot = -1;
                 window.socket.addEventListener('message', function (event) {
                     console.log(event.data);
                     const message = JSON.parse(event.data);

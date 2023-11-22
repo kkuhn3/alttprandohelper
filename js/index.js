@@ -20,7 +20,11 @@
                 bg: document.getElementById('background-color').value ||
                     document.getElementById('custom-color').value,
                 id: document.getElementById('save-id').value,
-                arch: document.getElementById('arch-id').value
+                arch: document.getElementById('arch-id').value,
+                ks: document.getElementById('ks').value === "ks",
+                bks: document.getElementById('bks').value === "bks",
+                ms: document.getElementById('ms').value === "ms",
+                cs: document.getElementById('cs').value === "cs"
             },
             size = function(scale, size) {
                 return {
@@ -53,7 +57,11 @@
             params.scale && 'scale='+params.scale,
             !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg),
             params.id && 'id='+params.id,
-            params.arch && 'arch='+params.arch
+            params.arch && 'arch='+params.arch,
+            params.ks && 'ks',
+            params.bks && 'bks',
+            params.ms && 'ms',
+            params.cs && 'cs'
         ]).join('&');
     }
 

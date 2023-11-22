@@ -227,6 +227,14 @@ body {
 .chest-4 { background-image: url(images/dungeons/chest4.png); }
 .chest-5 { background-image: url(images/dungeons/chest5.png); }
 .chest-6 { background-image: url(images/dungeons/chest6.png); }
+.chest-7 { background-image: url(images/dungeons/chest7.png); }
+.chest-8 { background-image: url(images/dungeons/chest8.png); }
+.chest-9 { background-image: url(images/dungeons/chest9.png); }
+.chest-10 { background-image: url(images/dungeons/chest10.png); }
+.chest-11 { background-image: url(images/dungeons/chest11.png); }
+.chest-12 { background-image: url(images/dungeons/chest12.png); }
+.chest-13 { background-image: url(images/dungeons/chest13.png); }
+.chest-14 { background-image: url(images/dungeons/chest14.png); }
 
 .bomb { background-image: url(images/overlay/bomb.png); }
 .crystal { background-image: url(images/overlay/crystal.png); }
