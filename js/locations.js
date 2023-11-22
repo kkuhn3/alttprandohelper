@@ -965,12 +965,39 @@
         'glove':[97],
         'flippers':[30],
         'flute':[20],
-        'dungeonItem':[162, 157, 141, 125, 163, 156, 140, 124, 170, 149, 133, 117, 160, 159, 143, 127, 164, 166, 153, 137, 121, 171, 148, 132, 116, 168, 151, 135, 119, 165, 154, 138, 122, 169, 150, 134, 118, 167, 152, 136, 120, 172, 147, 131, 115, 173, 146, 130, 114]
+        'smallKeys':[160, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173],
+        'bossKey':[146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 159],
+        'map':[114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 127],
+        'compass':[130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 143]
     }
 
     window.getItemFromId = function(itemId) {
         for (const [key, value] of Object.entries(itemToIds)) {
             if (value.includes(itemId)) {
+                if ('smallKeys' === key) {
+                    if (window.uri_query().ks) {
+                        return 'noop';
+                    }
+                    return "dungeonItem";
+                }
+                else if ('bossKey' === key) {
+                    if (window.uri_query().bks) {
+                        return 'noop';
+                    }
+                    return "dungeonItem";
+                }
+                else if ('map' === key) {
+                    if (window.uri_query().ms) {
+                        return 'noop';
+                    }
+                    return "dungeonItem";
+                }
+                else if ('compass' === key) {
+                    if (window.uri_query().cs) {
+                        return 'noop';
+                    }
+                    return "dungeonItem";
+                }
                 return key;
             }
         }
