@@ -16,6 +16,16 @@ div {
   background-color: #ddd;
   padding: 5px;
 }
+
+select {
+  width: 180px;
+}
+
+input[type='text'] {
+  width: 176px;
+  padding-block: 0px;
+  padding-inline: 0px;
+}
   
 .hidden { 
   display: none; 
