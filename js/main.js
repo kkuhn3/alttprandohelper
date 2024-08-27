@@ -417,7 +417,7 @@
                     }
 
                     // seems to be an initial connect response
-                    if (commands.includes("Connected") && commands.includes("ReceivedItems")) {
+                    if (commands.includes("Connected")) {
                         // Get slot info
                         for (let command of message) {
                             if (command.cmd === "Connected") {
@@ -531,8 +531,8 @@
                         "tags" : ["Tracker"],
                         "version" : {
                             "major": 0,
-                            "minor": 4,
-                            "build": 3,
+                            "minor": 5,
+                            "build": 0,
                             "class": "Version"
                         },
                         "items_handling" : 7,
