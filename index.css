@@ -1,19 +1,18 @@
 body { 
-  font-family: Arial, Helvetica, sans-serif; 
-  font-size: 14px; 
+  font-family: sans-serif; 
 }
 
 html {
-  background-color: #ddd;
+  background-color: #d3dfeb;
 }
   
 label { 
-  width: 13em; 
+  width: 210px; 
   display: inline-block; 
 }
 
 div { 
-  background-color: #ddd;
+  background-color: #d3dfeb;
   padding: 5px;
 }
 
@@ -26,6 +25,10 @@ input[type='text'] {
   padding-block: 0px;
   padding-inline: 0px;
 }
+
+button {
+  cursor: pointer;
+}
   
 .hidden { 
   display: none; 
@@ -33,4 +36,10 @@ input[type='text'] {
   
 .invalid { 
   background-color: #ffcccc; 
+}
+
+.header {
+  width: 390px;
+  text-align: center;
+  font-weight: bold;
 }

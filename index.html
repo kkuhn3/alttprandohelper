@@ -2,28 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <title>launching ALttP tracker</title>
+  <title>ALttP Tracker Settings</title>
   <script src="js/util.js"></script>
   <script src="js/index.js"></script>
   <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-  <div>
-    <label>--Save Configs-------------------</label>
+  <div class="header">
+    Save Configs
   </div>
 
   <div>
     <label>Save Id</label>
     <input type="text" id="save-id" />
   </div>
-
   <div>
-    <label>Archipelago Address</label>
-    <input type="text" id="arch-id" />
+    <label>Archipelago Port</label>
+    <input type="text" id="arch-port" />
   </div>
 
-  <div>
-    <label>--Randomizer Options---------</label>
+  <div class="header">
+    Randomizer Settings
   </div>
 
   <div>
@@ -33,7 +32,6 @@
       <option value="open">Open</option>
     </select>
   </div>
-
   <div>
     <label>Small Keys</label>
     <select id="ks">
@@ -63,8 +61,8 @@
     </select>
   </div>
 
-  <div>
-    <label>--Display Layouts---------------</label>
+  <div class="header">
+    Display Layouts
   </div>
 
   <div>
@@ -75,7 +73,6 @@
       <option value="vmap">Vertical map</option>
     </select>
   </div>
-
   <div>
     <label>Sprite</label>
     <select id="sprite">
@@ -144,7 +141,6 @@
       <option value="zora">Zora</option>
     </select>
   </div>
-
   <div>
     <label>Scaling</label>
     <select id="scale">
@@ -155,7 +151,6 @@
       <option value="60">Scaled 60%</option>
     </select>
   </div>
-
   <div>
     <label>Background Color</label>
     <select id="background-color">
@@ -166,6 +161,10 @@
       <option value="">CSS Color</option>
     </select>
     <input type="text" id="custom-color" class="hidden" title="css color i.e keyword, #RRGGBB" />
+  </div>
+
+  <div class="header">
+    Ready
   </div>
   
   <div>

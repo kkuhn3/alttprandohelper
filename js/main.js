@@ -402,10 +402,10 @@
                 }
             }
 
-            // Load from arch
-            window.arch = this.props.query.arch;
-            if (window.arch) {
-                window.socket = new WebSocket(window.arch);
+            // Load from archipelago
+            window.archPort = this.props.query.archPort;
+            if (window.archPort && window.id) {
+                window.socket = new WebSocket("wss://archipelago.gg:" + window.archPort);
                 
                 window.slot = -1;
                 window.socket.addEventListener('message', function (event) {

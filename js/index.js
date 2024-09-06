@@ -20,7 +20,7 @@
                 bg: document.getElementById('background-color').value ||
                     document.getElementById('custom-color').value,
                 id: document.getElementById('save-id').value,
-                arch: document.getElementById('arch-id').value,
+                archPort: document.getElementById('arch-port').value,
                 ks: document.getElementById('ks').value === "ks",
                 bks: document.getElementById('bks').value === "bks",
                 ms: document.getElementById('ms').value === "ms",
@@ -57,7 +57,7 @@
             params.scale && 'scale='+params.scale,
             !['', 'black'].includes(params.bg) && 'bg='+encodeURIComponent(params.bg),
             params.id && 'id='+params.id,
-            params.arch && 'arch='+params.arch,
+            params.archPort && 'archPort='+params.archPort,
             params.ks && 'ks',
             params.bks && 'bks',
             params.ms && 'ms',
