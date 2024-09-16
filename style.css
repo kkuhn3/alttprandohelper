@@ -37,6 +37,7 @@ body {
   height: 48px;
   font-size: 30px;
   cursor: default;
+  user-select: none;
 }
 #tracker .sword { position: absolute; top: 0; right: 0; }
 #tracker .shield { position: absolute; bottom: 0; left: 0; }
@@ -198,7 +199,18 @@ body {
 .flute { background-image: url(images/items/flute.png); }
 .agahnim { background-image:url(images/dungeons/agahnim0.png); }
 .agahnim.active { background-image:url(images/dungeons/agahnim1.png); }
-#map .boss.agahnim { background-color: transparent; }
+#map .chest.agahnim { 
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+  margin-top: -18px;
+  position: absolute;
+  background-size:100% 100%;
+  background-image:url(images/dungeons/agahnimSmall.png), url(images/overlay/poi.png);
+}
+#map .chest.agahnim.highlight {
+  background-image:url(images/dungeons/agahnimSmall.png), url(images/overlay/highlighted.png);
+}
 .tower { background-image:url(images/dungeons/agahnim0.png); }
 #map .boss.tower { background-color: transparent; }
 .boss.eastern { background-image: url(images/dungeons/boss0.png); }

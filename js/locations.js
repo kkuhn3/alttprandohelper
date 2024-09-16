@@ -205,16 +205,6 @@
     };
 
     var encounters = {
-        agahnim: {
-            caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
-            darkworld: false,
-            is_completable: function(items, model) {
-                return items.sword >= 2 || items.cape && items.sword ?
-                    items.lantern ? 'available' : 'dark' :
-                    'unavailable';
-            },
-            checks: []
-        },
         tower: {
             caption: 'Ganon\s Tower (20)',
             darkworld: true,
@@ -237,6 +227,17 @@
     };
 
     var chests = {
+        agahnim: {
+            caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
+            is_available: function(items, model) {
+                return items.sword >= 2 || items.cape && items.sword ?
+                    items.lantern ? 'available' : 'dark' :
+                    'unavailable';
+            },
+            checks: [1598089, 1598086],
+            marked: true,
+            key_drops: [1310817, 1310802]
+        },
         altar: {
             caption: 'Master Sword Pedestal {pendant0}{pendant1}{pendant2} (can check with {book})',
             is_available: function(items, model) {
@@ -560,7 +561,7 @@
             checks: [188229, 59761]
         },
         castle: {
-            caption: 'Hyrule Castle Dungeon (3 + 3)',
+            caption: 'Hyrule Castle Dungeon (3)',
             is_available: always,
             checks: [59764, 60172, 60169],
             key_drops: [1310775, 1310772, 1310781]
@@ -783,12 +784,16 @@
     const towerKeyCount = encounters["tower"].checks.length - encounters["tower"].chest_limit - 3;
     if (window.uri_query().kd) {
         encounters["tower"].checks.push(...encounters["tower"].key_drops);
+        chests["castle"].checks.push(...chests["castle"].key_drops);
+        chests["escape_dark"].checks.push(...chests["escape_dark"].key_drops);
+        chests["agahnim"].checks.push(...chests["agahnim"].key_drops);
     }
     if (window.uri_query().ks) {
         encounters["tower"].chest_limit = encounters["tower"].chest_limit + towerKeyCount;
         if (window.uri_query().kd) {
             encounters["tower"].chest_limit = encounters["tower"].chest_limit + encounters["tower"].key_drops.length;
         }
+        chests["agahnim"].marked = false;
     }
     if (window.uri_query().bks) {
         encounters["tower"].chest_limit = encounters["tower"].chest_limit + 1;
@@ -800,11 +805,6 @@
         encounters["tower"].chest_limit = encounters["tower"].chest_limit + 1;
     }
     encounters["tower"].chests = encounters["tower"].chest_limit;
-
-    if (window.uri_query().kd) {
-       chests["castle"].checks.push(...chests["castle"].key_drops);
-       chests["escape_dark"].checks.push(...chests["escape_dark"].key_drops);
-    }
     
     dungeons = finalize_dungeons(dungeons,
         function(dungeon) { return update(dungeon, { $merge: { chests: dungeon.chest_limit } }); });

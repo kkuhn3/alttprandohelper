@@ -225,7 +225,7 @@
         var name = props.name,
             model = props.model,
             encounter = model.encounters[name],
-            completed = model.items[name] || encounter.chests === 0;
+            completed = encounter.chests === 0;
         return [
             div('.boss', {
                 className: as_location(name),
