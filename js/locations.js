@@ -17,7 +17,8 @@
                     this.chests === 1 && !items.has_bow() ?
                     'possible' : 'available';
             },
-            checks: [1573200, 59827, 59893, 59767, 59833, 59773]
+            checks: [1573200, 59827, 59893, 59767, 59833, 59773],
+            key_drops: [1310811, 1310793]
         },
         desert: {
             caption: 'Desert Palace',
@@ -33,7 +34,8 @@
                 if (items.glove && (items.firerod || items.lantern) && items.boots) return 'available';
                 return this.chests > 1 && items.boots ? 'available' : 'possible';
             },
-            checks: [1573216, 59842, 59851, 59791, 1573201, 59830]
+            checks: [1573216, 59842, 59851, 59791, 1573201, 59830],
+            key_drops: [1310769, 1310763, 1310760]
         },
         hera: {
             caption: 'Tower of Hera',
@@ -49,7 +51,8 @@
                     items.flute || items.lantern ? 'available' : 'dark' :
                     'possible';
             },
-            checks: [1573218, 59878, 59821, 1573202, 59896, 59899]
+            checks: [1573218, 59878, 59821, 1573202, 59896, 59899],
+            key_drops: []
         },
         darkness: {
             caption: 'Palace of Darkness {lantern}',
@@ -67,7 +70,8 @@
                     this.chests === 1 && !items.hammer ?
                     'possible' : 'available';
             },
-            checks: [59968, 59971, 59974, 59977, 59980, 59983, 59986, 1573203, 59989, 59959, 59992, 59962, 59995, 59965]
+            checks: [59968, 59971, 59974, 59977, 59980, 59983, 59986, 1573203, 59989, 59959, 59992, 59962, 59995, 59965],
+            key_drops: []
         },
         swamp: {
             caption: 'Swamp Palace {mirror}',
@@ -88,7 +92,8 @@
                 if (this.chests <= 5) return !items.hammer ? 'unavailable' : 'available';
                 return !items.hammer ? 'possible' : 'available';
             },
-            checks: [60064, 60067, 60070, 59782, 59785, 60073, 60076, 60079, 1573204, 60061]
+            checks: [60064, 60067, 60070, 59782, 59785, 60073, 60076, 60079, 1573204, 60061],
+            key_drops: [1310745, 1310742, 1310739, 1310736, 1310730]
         },
         skull: {
             caption: 'Skull Woods',
@@ -101,7 +106,8 @@
                 if (!items.can_reach_outcast()) return 'unavailable';
                 return items.firerod ? 'available' : 'possible';
             },
-            checks: [59809, 59902, 59848, 59794, 1573205, 59800, 59803, 59806]
+            checks: [59809, 59902, 59848, 59794, 1573205, 59800, 59803, 59806],
+            key_drops: [1310766, 1310748]
         },
         thieves: {
             caption: 'Thieves\' Town',
@@ -116,7 +122,8 @@
                 if (!items.can_reach_outcast()) return 'unavailable';
                 return this.chests === 1 && !items.hammer ? 'possible' : 'available';
             },
-            checks: [59905, 59908, 59911, 59914, 59917, 59920, 59923, 1573206]
+            checks: [59905, 59908, 59911, 59914, 59917, 59920, 59923, 1573206],
+            key_drops: [1310814, 1310799]
         },
         ice: {
             caption: 'Ice Palace (yellow=must bomb jump)',
@@ -132,7 +139,8 @@
                 if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
                 return items.hammer ? 'available' : 'possible';
             },
-            checks: [59872, 59875, 59812, 59818, 59860, 59797, 1573207, 59869]
+            checks: [59872, 59875, 59812, 59818, 59860, 59797, 1573207, 59869],
+            key_drops: [1310724, 1310754, 1310757, 1310790]
         },
         mire: {
             caption: medallion_caption('Misery Mire {medallion}{lantern}', 'mire'),
@@ -160,7 +168,8 @@
                     items.lantern && items.somaria) ?
                     'available' : 'possible';
             },
-            checks: [60001, 60004, 60007, 60010, 60013, 1573208, 59866, 59998]
+            checks: [60001, 60004, 60007, 60010, 60013, 1573208, 59866, 59998],
+            key_drops: [1310805, 1310796, 1310820]
         },
         turtle: {
             caption: medallion_caption('Turtle Rock {medallion}{lantern}', 'turtle'),
@@ -190,7 +199,8 @@
                 if (this.chests <= 4) return laser_safety && items.firerod && items.lantern ? 'available' : 'possible';
                 return items.firerod && items.lantern ? 'available' : 'possible';
             },
-            checks: [59938, 59941, 59944, 1573209, 59947, 59950, 59953, 59956, 59926, 59929, 59932, 59935]
+            checks: [59938, 59941, 59944, 1573209, 59947, 59950, 59953, 59956, 59926, 59929, 59932, 59935],
+            key_drops: [1310808, 1310727]
         }
     };
 
@@ -221,7 +231,8 @@
                 return crystal_count >= 7 ? 'available' : 'unavailable';
             },
             checks: [60160, 60163, 60166, 60088, 60091, 60094, 60097, 60100, 60103, 60106, 60109, 60112, 60115, 60118,
-                     60121, 60124, 60127, 1573217, 60130, 60133, 60136, 60139, 60142, 60145, 60148, 60151, 60157]
+                     60121, 60124, 60127, 1573217, 60130, 60133, 60136, 60139, 60142, 60145, 60148, 60151, 60157],
+            key_drops: [1310784, 1310787, 1310778, 1310751]
         }
     };
 
@@ -549,16 +560,18 @@
             checks: [188229, 59761]
         },
         castle: {
-            caption: 'Hyrule Castle Dungeon (3)',
+            caption: 'Hyrule Castle Dungeon (3 + 3)',
             is_available: always,
-            checks: [59764, 60172, 60169]
+            checks: [59764, 60172, 60169],
+            key_drops: [1310775, 1310772, 1310781]
         },
         escape_dark: {
             caption: 'Escape Sewer Dark Room {lantern}',
             is_available: function(items) {
                 return items.lantern ? 'available' : 'dark';
             },
-            checks: [59758]
+            checks: [59758],
+            key_drops: [1310733]
         },
         escape_side: {
             caption: 'Escape Sewer Side Room (3) {bomb}/{boots} (yellow = need small key)',
@@ -747,8 +760,14 @@
 
     for (const dungeonId in dungeons) {
         const keyCount = dungeons[dungeonId].checks.length - dungeons[dungeonId].chest_limit - 3;
+        if (window.uri_query().kd) {
+            dungeons[dungeonId].checks.push(...dungeons[dungeonId].key_drops);
+        }
         if (window.uri_query().ks) {
             dungeons[dungeonId].chest_limit = dungeons[dungeonId].chest_limit + keyCount;
+            if (window.uri_query().kd) {
+                dungeons[dungeonId].chest_limit = dungeons[dungeonId].chest_limit + dungeons[dungeonId].key_drops.length;
+            }
         }
         if (window.uri_query().bks) {
             dungeons[dungeonId].chest_limit = dungeons[dungeonId].chest_limit + 1;
@@ -762,8 +781,14 @@
     }
 
     const towerKeyCount = encounters["tower"].checks.length - encounters["tower"].chest_limit - 3;
+    if (window.uri_query().kd) {
+        encounters["tower"].checks.push(...encounters["tower"].key_drops);
+    }
     if (window.uri_query().ks) {
         encounters["tower"].chest_limit = encounters["tower"].chest_limit + towerKeyCount;
+        if (window.uri_query().kd) {
+            encounters["tower"].chest_limit = encounters["tower"].chest_limit + encounters["tower"].key_drops.length;
+        }
     }
     if (window.uri_query().bks) {
         encounters["tower"].chest_limit = encounters["tower"].chest_limit + 1;
@@ -775,6 +800,11 @@
         encounters["tower"].chest_limit = encounters["tower"].chest_limit + 1;
     }
     encounters["tower"].chests = encounters["tower"].chest_limit;
+
+    if (window.uri_query().kd) {
+       chests["castle"].checks.push(...chests["castle"].key_drops);
+       chests["escape_dark"].checks.push(...chests["escape_dark"].key_drops);
+    }
     
     dungeons = finalize_dungeons(dungeons,
         function(dungeon) { return update(dungeon, { $merge: { chests: dungeon.chest_limit } }); });
