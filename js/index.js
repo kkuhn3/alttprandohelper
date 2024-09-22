@@ -25,7 +25,8 @@
                 ks: document.getElementById('ks').value === "ks",
                 bks: document.getElementById('bks').value === "bks",
                 ms: document.getElementById('ms').value === "ms",
-                cs: document.getElementById('cs').value === "cs"
+                cs: document.getElementById('cs').value === "cs",
+                cu: document.getElementById('cu').value === "cu"
             },
             size = function(scale, size) {
                 return {
@@ -63,7 +64,8 @@
             params.ks && 'ks',
             params.bks && 'bks',
             params.ms && 'ms',
-            params.cs && 'cs'
+            params.cs && 'cs',
+            params.cu && 'cu',
         ]).join('&');
     }
 

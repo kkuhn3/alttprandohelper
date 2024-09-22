@@ -234,7 +234,7 @@
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
             },
-            checks: [1598089, 1598086],
+            checks: [60085, 60082],
             marked: true,
             key_drops: [1310817, 1310802]
         },
@@ -741,6 +741,16 @@
                 return items.moonpearl && items.flute && items.glove === 2 ? 'available' : 'unavailable';
             },
             checks: [60019, 60022]
+        },
+        upgrade_shop: {
+            caption: 'Capacity Upgrade Fairy Shop (2)',
+            darkworld: false,
+            is_available: function(items) {
+                return items.flippers ? 'available' : 'unavailable';
+            },
+            checks: [],
+            marked: true,
+            shop_checks: [4194334, 4194335]
         }
     };
 
@@ -805,7 +815,11 @@
         encounters["tower"].chest_limit = encounters["tower"].chest_limit + 1;
     }
     encounters["tower"].chests = encounters["tower"].chest_limit;
-    
+    if (window.uri_query().cu) {
+        chests["upgrade_shop"].checks.push(...chests["upgrade_shop"].shop_checks);
+        chests["upgrade_shop"].marked = false;
+    }
+
     dungeons = finalize_dungeons(dungeons,
         function(dungeon) { return update(dungeon, { $merge: { chests: dungeon.chest_limit } }); });
 
@@ -893,7 +907,8 @@
             result[key] = {};
             Object.assign(result[key], { 
                 caption: value.caption, 
-                darkworld: value.darkworld
+                darkworld: value.darkworld,
+                marked: value.marked
             });
             Object.assign(result[key], { is_available: function(items, model) {
                 if(!prologueable.includes(key)) {
@@ -920,7 +935,7 @@
             
         for (const [key, value] of Object.entries(dungeons)) {
             if(value.checks.includes(memId)) {
-                if(memId > 1573199 && memId !== 1573216 && memId !== 1573218) {
+                if(memId > 1573199 && memId < 1573210) {
                     let bossCheck = {
                         func: "boss_click",
                         name: key
